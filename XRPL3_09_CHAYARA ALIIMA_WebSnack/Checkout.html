@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout - Snack Cin</title>
+  <style>
+    :root {
+      --primary: #f6cfcf;          /* Soft pink */
+      --background: #fffaf7;       /* Creamy background */
+      --text-main: #5a3d2b;        /* Dark cocoa */
+      --text-secondary: #7a5d4c;   /* Mocha */
+      --highlight: #ffe9d6;        /* Pastel peach */
+      --accent: #f1a49b;           /* Accent pink */
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      background: var(--background);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--primary);
+      color: var(--text-main);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 1.5px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      margin-left: 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      padding-bottom: 3px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    nav a:hover, nav a:focus {
+      color: #a74f3c;
+    }
+
+    nav a[aria-current="page"] {
+      border-bottom: 2px solid #a74f3c;
+    }
+
+    main {
+      flex: 1;
+      padding: 3rem 1.5rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    main h2 {
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-main);
+    }
+
+    form {
+      background: var(--highlight);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    input, select {
+      padding: 0.5rem;
+      border: 2px solid var(--button-bg);
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover, button:focus {
+      background: #e2887f;
+    }
+
+    footer {
+      background: var(--primary);
+      color: var(--text-main);
+      text-align: center;
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        width: 100%;
+        margin-top: 0.5rem;
+        justify-content: center;
+      }
+
+      nav a {
+        margin: 0.5rem;
+      }
+
+      main {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Snack Cin</h1>
+    <nav>
+      <a href="Index.html">Home</a>
+      <a href="Login.html">Login</a>
+      <a href="Register.html">Register</a>
+      <a href="About.html">About</a>
+      <a href="Contact.html">Contact</a>
+      <a href="Shop.html">Shop</a>
+      <a href="Cart.html">Cart</a>
+      <a href="Checkout.html" aria-current="page">Checkout</a>
+      <a href="Invoice.html">Invoice</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Checkout</h2>
+    <form id="checkout-form" onsubmit="handleSubmit(event)">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required placeholder="Your full name" />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com" />
+
+      <label for="address">Delivery Address</label>
+      <input type="text" id="address" name="address" required placeholder="1234 Main St" />
+
+      <label for="payment">Payment Method</label>
+      <select id="payment" name="payment" required>
+        <option value="">Select payment method</option>
+        <option value="card">Credit/Debit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cod">Cash on Delivery</option>
+      </select>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 Snack Cin
+  </footer>
+<script>
+  function handleSubmit(event) {
+    event.preventDefault();
+    const name = event.target.name.value.trim();
+    const email = event.target.email.value.trim();
+    const address = event.target.address.value.trim();
+    const payment = event.target.payment.value;
+  
+    if (name && email && address && payment) {
+      alert(`Thank you, ${name}! Your order has been placed.`);
+      // Redirect to Invoice page
+      window.location.href = "Invoice.html";
+    } else {
+      alert('Please fill in all the fields.');
+    }
+  }
+</script> 
+</body>
+</html>

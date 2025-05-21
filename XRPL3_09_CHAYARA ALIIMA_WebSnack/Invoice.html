@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoice - Snack Cin</title>
+  <style>
+    :root {
+      --primary: #f6cfcf;
+      --background: #fffaf7;
+      --text-main: #5a3d2b;
+      --text-secondary: #7a5d4c;
+      --highlight: #ffe9d6;
+      --accent: #f1a49b;
+      --button-bg: #b85c38;
+      --button-hover: #933c24;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: var(--background);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--primary);
+      color: var(--text-main);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 1.5px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      margin-left: 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      padding-bottom: 3px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    nav a:hover, nav a:focus {
+      color: #a74f3c;
+    }
+
+    nav a[aria-current="page"] {
+      border-bottom: 2px solid #a74f3c;
+    }
+
+    main {
+      flex: 1;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: var(--highlight);
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(184,92,56,0.3);
+    }
+
+    h2 {
+      color: var(--text-main);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .invoice-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .invoice-info div {
+      margin-bottom: 0.5rem;
+      flex: 1 1 45%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--button-bg);
+      text-align: left;
+    }
+
+    th {
+      background: var(--accent);
+      color: var(--text-main);
+    }
+
+    tfoot td {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-main);
+    }
+
+    .btn-container {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .btn-container button {
+      background: #b85c38;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+
+    button:hover, button:focus {
+      background: #e2887f;
+    }
+
+    footer {
+      background: var(--primary);
+      color: var(--text-main);
+      text-align: center;
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+    }
+
+    @media print {
+      header, nav, footer, .btn-container {
+        display: none !important;
+      }
+
+      main {
+        box-shadow: none;
+        background: white;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        background: white;
+        color: #e2887f !important;
+      }
+
+      main, th, td, h2, strong, span, p {
+        color: #e2887f !important;
+      }
+    }
+
+    
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Snack Cin</h1>
+    <nav>
+      <a href="Index.html">Home</a>
+      <a href="Login.html">Login</a>
+      <a href="Register.html">Register</a>
+      <a href="About.html">About</a>
+      <a href="Contact.html">Contact</a>
+      <a href="Shop.html">Shop</a>
+      <a href="Cart.html">Cart</a>
+      <a href="Checkout.html">Checkout</a>
+      <a href="Invoice.html" aria-current="page">Invoice</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Invoice Details</h2>
+    <div class="invoice-info">
+      <div>
+        <strong>Invoice #: </strong> <span id="invoice-number"></span><br />
+        <strong>Date: </strong> <span id="invoice-date"></span><br />
+        <strong>Customer: </strong> <span id="customer-name"></span>
+      </div>
+      <div>
+        <strong>Delivery Address:</strong><br />
+        <span id="customer-address"></span>
+      </div>
+    </div>
+
+    <table aria-label="Invoice details">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="invoice-items">
+        <!-- Invoice items will be dynamically added here -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" style="text-align:right;">Subtotal:</td>
+          <td id="subtotal"></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align:right;">Tax (10%):</td>
+          <td id="tax"></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align:right;">Total:</td>
+          <td id="total"></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <p style="text-align:center;">Thank you for your purchase! We hope to see you again soon.</p>
+  </main>
+
+  <div class="btn-container">
+    <button onclick="window.print()">Cetak Invoice</button>
+  </div>
+
+  <footer>
+    &copy; 2025 Snack Cin. All rights reserved.
+  </footer>
+
+  <script>
+    function formatRupiah(number) {
+      return 'Rp ' + number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.').replace(',', '.');
+    }
+
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const customer = JSON.parse(localStorage.getItem("customer")) || {
+      name: "Jane Doe",
+      address: "Jl. Contoh No. 123, Kota Contoh"
+    };
+    const invoiceNumber = '2024001';
+    const invoiceDate = new Date().toLocaleDateString();
+
+    document.getElementById("invoice-number").textContent = invoiceNumber;
+    document.getElementById("invoice-date").textContent = invoiceDate;
+    document.getElementById("customer-name").textContent = customer.name;
+    document.getElementById("customer-address").textContent = customer.address;
+
+    let subtotal = 0;
+    const invoiceItemsBody = document.getElementById("invoice-items");
+    cartItems.forEach(item => {
+      const itemTotal = item.price * item.qty;
+      subtotal += itemTotal;
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.qty}</td>
+        <td>${formatRupiah(item.price)}</td>
+        <td>${formatRupiah(itemTotal)}</td>
+      `;
+      invoiceItemsBody.appendChild(row);
+    });
+
+    const tax = subtotal * 0.1;
+    const total = subtotal + tax;
+    document.getElementById("subtotal").textContent = formatRupiah(subtotal);
+    document.getElementById("tax").textContent = formatRupiah(tax);
+    document.getElementById("total").textContent = formatRupiah(total);
+  </script>
+</body>
+</html>
